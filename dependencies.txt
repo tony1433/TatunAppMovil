@@ -15,5 +15,7 @@ npm install react-native-pager-view
 vector icons (https://github.com/oblador/react-native-vector-icons)
 npm install --save react-native-vector-icons
 
+DrawableFlatList (https://github.com/computerjazz/react-native-draggable-flatlist)
+npm install --save react-native-draggable-flatlist
 
 
