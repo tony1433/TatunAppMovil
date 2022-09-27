@@ -12,7 +12,7 @@ import {
 import {loginStyle} from './styles/styles';
 //import connections and services
 import {axiosGet} from '../services/Axios/AxiosDefault';
-import {InsertQuery, SelectQuery} from '../scripts/Db';
+import {InsertQuery, SelectQuery} from '../services/SQLite/Db';
 
 class LoginScreen extends Component {
   constructor() {
