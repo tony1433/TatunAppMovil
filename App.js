@@ -1,31 +1,31 @@
-//import react
-import React, {Component} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
-//import components
-import {NavigationContainer} from '@react-navigation/native';
-import StackNavigator from './src/navigators/StackNavigator';
 import {Alert} from 'react-native';
-//import services
+import {NavigationContainer} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
+import StackNavigator from './src/navigation/StackNavigator';
+import GlobalContext from './src/context/GlobalContext';
 
-global.db = SQLite.openDatabase(
-  {name: 'tatundb.db', createFromLocation: 1},
-  () => {
-    Alert.alert('Connected with success !');
-  },
-  error => {
-    Alert.alert('Something went wrong !', `${error}`);
-  },
-);
+SQLite.DEBUG = true;
 
-class App extends Component {
-  render() {
-    return (
+function App() {
+  global.db = SQLite.openDatabase(
+    {name: 'tatundb.db', createFromLocation: 1},
+    () => {
+      console.log('base de datos iniciada');
+    },
+    error => {
+      Alert.alert('Ocurrio un error !', `${error}`);
+    },
+  );
+
+  return (
+    <GlobalContext>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
-    );
-  }
+    </GlobalContext>
+  );
 }
 
 export default App;

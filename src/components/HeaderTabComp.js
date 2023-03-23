@@ -1,24 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {headerTabStyle} from './styles/styles';
 //import icons
 import TatunAppIcon from '../assets/icons/customIcons/TatunAppIcon';
 
-class HeaderTabComp extends Component {
-  render() {
-    const {navigation} = this.props;
-    return (
-      <View style={headerTabStyle.container}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('CostumersScreen');
-          }}>
-          <TatunAppIcon name="icon_regresar" color={'#FFFFFF'} size={25} />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+function HeaderTabComp(props) {
+  const handleReturn = () => {
+    props.navigation.navigate('CostumersScreen');
+  };
+
+  return (
+    <View style={Styles.container}>
+      <TouchableOpacity onPress={handleReturn}>
+        <TatunAppIcon name="icon_regresar" color={'#FFFFFF'} size={25} />
+      </TouchableOpacity>
+    </View>
+  );
 }
+
+const Styles = StyleSheet.create({
+  container: {
+    flex: 0.1,
+    backgroundColor: '#1190CB',
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+  },
+});
 
 export default HeaderTabComp;
