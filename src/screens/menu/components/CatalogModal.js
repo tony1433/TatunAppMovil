@@ -10,6 +10,7 @@ function CatalogModal(props) {
     handleSectors,
     handleClients,
     handleInventory,
+    handleDeleteClients,
   } = props;
 
   return (
@@ -40,6 +41,11 @@ function CatalogModal(props) {
             <TouchableOpacity style={Styles.btnOption} onPress={handleClients}>
               <Text style={Styles.txtOption}>Actualizar clientes</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={Styles.btnOption}
+              onPress={handleDeleteClients}>
+              <Text style={Styles.txtOption}>Eliminar clientes</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -57,7 +63,7 @@ export const Styles = StyleSheet.create({
   },
   centerContainer: {
     width: 350,
-    height: 350,
+    height: 400,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },

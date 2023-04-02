@@ -32,6 +32,11 @@ export function getClients(id_user) {
   return apiPost(enpoint, body);
 }
 
+export function getClient(id) {
+  const enpoint = `/client/${id}`;
+  return apiGet(enpoint);
+}
+
 export function updateClient(client) {
   const enpoint = '/edit/client/app';
   const body = {client};

@@ -115,3 +115,20 @@ export async function updatePositionClient(id, position) {
 
   return query;
 }
+
+export async function deleteClient(clientId, userId) {
+  let client$ = await ExecuteQuery(
+    'SELECT * FROM client WHERE id = ? and id_user = ?',
+    [clientId, userId],
+  );
+
+  if (client$.rows.length == 0) {
+    console.log('si entro a eliminar clientes', clientId, userId);
+    let query = await ExecuteQuery(`DELETE FROM client WHERE id = ?`, [
+      clientId,
+    ]);
+    if (query.rows.length != 0) {
+      console.log('se elimino el cliente ', clientId);
+    }
+  }
+}

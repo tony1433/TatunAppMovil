@@ -14,10 +14,15 @@ import {
   getSectors,
   getClients,
   getInventory,
+  getClient,
 } from '../../services/remote/ApiServices';
 import {deleteUser} from '../../services/local/LocalServicesUser';
 import {insertSector} from '../../services/local/LocalServicesSectors';
-import {insertClient} from '../../services/local/LocalServicesClients';
+import {
+  insertClient,
+  selectTotalClients,
+  deleteClient,
+} from '../../services/local/LocalServicesClients';
 import {insertProduct} from '../../services/local/LocalServicesProduct';
 import {insertInventory} from '../../services/local/LocalServicesInventory';
 import useApiRequest from '../../hooks/useApiRequest';
@@ -112,6 +117,24 @@ function MenuScreen(props) {
     }
   };
 
+  const handleDeleteClients = async () => {
+    setCatalogModal(false);
+    setLoad(true);
+    setTextLoad('Cargando informacion en la app..');
+    const clients = await selectTotalClients();
+    setLoad(false);
+    setTextLoad('');
+    setTextLoad('Cargando informacion desde el servidor...');
+    await Promise.all(
+      clients.raw().map(async client => {
+        const response = await callEnpoint(getClient(client.id));
+        if (response) {
+          await deleteClient(client.id, response[0].id_user);
+        }
+      }),
+    );
+  };
+
   const handleCloseCatalog = () => {
     setCatalogModal(false);
   };
@@ -174,6 +197,7 @@ function MenuScreen(props) {
         handleSectors={handleRefreshSectors}
         handleClients={handleRefreshClients}
         handleInventory={handleRefreshInventory}
+        handleDeleteClients={handleDeleteClients}
       />
     </>
   );

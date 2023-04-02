@@ -3,13 +3,11 @@ import {
   View,
   StatusBar,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Alert,
   ScrollView,
   SafeAreaView,
-  ToastAndroid,
 } from 'react-native';
 import {
   updateClient,
@@ -81,69 +79,82 @@ function FinishSaleScreen(props) {
     setTotal(sumTotal);
   };
 
+  //services
   const updateClientService = async () => {
     const clients = await selectAllClients();
-    clients.raw().map(async client => {
-      const response = await callEnpoint(updateClient(client));
-      if (response) {
-        await updateStatusClient(client.id);
-        console.log('cliente actualizado');
-      }
-    });
+    await Promise.all(
+      clients.raw().map(async client => {
+        const response = await callEnpoint(updateClient(client));
+        if (response) {
+          await updateStatusClient(client.id);
+          console.log('cliente actualizado');
+        }
+      }),
+    );
   };
 
   const updateInventoryService = async () => {
     const inventorys = await selectAllInventory(getDate());
-    inventorys.raw().map(async inventory => {
-      const response = await callEnpoint(updateInventory(inventory));
-      if (response) {
-        console.log('inventario actualizado');
-      }
-    });
+    await Promise.all(
+      inventorys.raw().map(async inventory => {
+        const response = await callEnpoint(updateInventory(inventory));
+        if (response) {
+          console.log('inventario actualizado');
+        }
+      }),
+    );
   };
 
   const insertPaymentService = async () => {
     const payments = await selectPayments(getDate());
-    payments.raw().map(async payment => {
-      const response = await callEnpoint(insertPayment(payment));
-      if (response) {
-        console.log('abono insertado');
-      }
-    });
+    await Promise.all(
+      payments.raw().map(async payment => {
+        const response = await callEnpoint(insertPayment(payment));
+        if (response) {
+          console.log('abono insertado');
+        }
+      }),
+    );
   };
 
   const insertSaleCashService = async () => {
     const sale_cash = await selectSaleCash(getDate());
-    console.log('sale_cash', sale_cash.raw());
-    sale_cash.raw().map(async sale => {
-      const response = await callEnpoint(insertSaleCash(sale));
-      if (response) {
-        console.log('venta contado insertada');
-      }
-    });
+    await Promise.all(
+      sale_cash.raw().map(async sale => {
+        const response = await callEnpoint(insertSaleCash(sale));
+        if (response) {
+          console.log('venta contado insertada');
+        }
+      }),
+    );
   };
 
   const insertSaleCreditService = async () => {
     const sale_credit = await selectSaleCredit(getDate());
 
-    sale_credit.raw().map(async sale => {
-      const response = await callEnpoint(insertSaleCredit(sale));
-      if (response) {
-        console.log('venta credito insertada');
-      }
-    });
+    await Promise.all(
+      sale_credit.raw().map(async sale => {
+        const response = await callEnpoint(insertSaleCredit(sale));
+        if (response) {
+          console.log('venta credito insertada');
+        }
+      }),
+    );
   };
 
   const insertSpentService = async () => {
     const spents = await selectSpent(getDate());
-    spents.raw().map(async spent => {
-      const response = await callEnpoint(insertSpent(spent));
-      if (response) {
-        console.log('gasto insertado');
-      }
-    });
+    await Promise.all(
+      spents.raw().map(async spent => {
+        const response = await callEnpoint(insertSpent(spent));
+        if (response) {
+          console.log('gasto insertado');
+        }
+      }),
+    );
   };
 
+  //finish sales
   const handleFinish = async () => {
     if (total != '0') {
       setLoad(true);
